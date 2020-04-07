@@ -261,7 +261,8 @@ body {
   margin-top: -30px;
 }
 /* line 2, ../sass/mixins.sass */
-.actions--bar:before, .actions--bar:after {
+.actions--bar:before,
+.actions--bar:after {
   content: " ";
   display: table;
 }
@@ -305,7 +306,11 @@ p {
 }
 
 /* line 74, ../sass/global.sass */
-.grid, .grid-25, .grid-33, .grid-66, .grid-100 {
+.grid,
+.grid-25,
+.grid-33,
+.grid-66,
+.grid-100 {
   float: left;
   padding: 0 15px;
   box-sizing: border-box;
@@ -349,7 +354,8 @@ p {
   box-sizing: border-box;
 }
 /* line 2, ../sass/mixins.sass */
-.course--module:before, .course--module:after {
+.course--module:before,
+.course--module:after {
   content: " ";
   display: table;
 }
@@ -423,6 +429,7 @@ p {
 }
 /* line 162, ../sass/global.sass */
 .course--header {
+  margin-top: 30px;
   margin-bottom: 30px;
 }
 /* line 164, ../sass/global.sass */
@@ -478,7 +485,8 @@ p {
   font-family: "Cousine";
 }
 /* line 2, ../sass/mixins.sass */
-.course--description li:before, .course--description li:after {
+.course--description li:before,
+.course--description li:after {
   content: " ";
   display: table;
 }
@@ -546,6 +554,7 @@ p {
   font-size: 14px;
   padding: 0 0 10px;
   margin-bottom: 10px;
+  margin-top: 30px;
   border-bottom: 1px solid #ddd;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -571,6 +580,11 @@ p {
   margin-bottom: 15px;
   list-style-type: circle;
 }
+
+.course--stats--list--eta {
+  font-weight: bold;
+}
+
 /* line 311, ../sass/global.sass */
 .course--time--input {
   font-family: "Work Sans", sans-serif;
