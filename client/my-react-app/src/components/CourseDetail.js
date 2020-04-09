@@ -38,9 +38,9 @@ const CourseDetail = props => {
 
   const CourseInfo = () => {
     return (
-      <div id="courseDetails">
-        <div id="actionBar">
-          <div id="ABContent">
+      <div className="CDPage">
+        <div className="actionBar">
+          <div className="ABContent">
             <Link className="button" to={`/courses/id/update`}>
               Update Course
             </Link>
@@ -50,7 +50,18 @@ const CourseDetail = props => {
             </Link>
           </div>
         </div>
-        <div id="courseDetails"></div>
+        <div className="courseDetails">
+          <div className="courseHeader">
+            <h4 className="detailCourseLabel">Course</h4>
+            <h1>{details.title}</h1>
+            <p>
+              By {user.firstName} {user.lastName}
+            </p>
+          </div>
+          <div className="courseDescription">
+            <p>{details.description}</p>
+          </div>
+        </div>
       </div>
       // <div>
       //   <div>
@@ -70,16 +81,16 @@ const CourseDetail = props => {
       //   </div>
       //   <div className="course--detail">
       //     <div className=" grid-66">
-      //       <div className="course--header">
-      //         <h4 className="course--label">Course</h4>
-      //         <h1>{details.title}</h1>
-      //         <p>
-      //           By {user.firstName} {user.lastName}
-      //         </p>
-      //       </div>
-      //       <div className="course-description">
-      //         <p>{details.description}</p>
-      //       </div>
+      // <div className="course--header">
+      //   <h4 className="course--label">Course</h4>
+      //   <h1>{details.title}</h1>
+      //   <p>
+      //     By {user.firstName} {user.lastName}
+      //   </p>
+      // </div>
+      // <div className="course-description">
+      //   <p>{details.description}</p>
+      // </div>
       //     </div>
       //     <aside className="grid-25 grid-right">
       //       <div className="course-stats">

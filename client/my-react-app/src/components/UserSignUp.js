@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 // modules
 const axios = require("axios");
 
-const Courses = () => {
+const SignUp = () => {
   const apiGetCourses = "http://localhost:5000/api/courses";
   const [courses, setCourses] = useState([]);
 
@@ -16,7 +16,7 @@ const Courses = () => {
 
   const SignUpForm = () => {
     return (
-      <div className="bounds">
+      <div className="form">
         <div className="centered grid-33 signup">
           <h1>Sign Up</h1>
           <div>
@@ -51,9 +51,11 @@ const Courses = () => {
             <button className="button" type="submit">
               Sign Up
             </button>
-            <button className="button button-secondary">Cancel</button>
+            <a href="/" className="button buttonSecondary">
+              Cancel
+            </a>
           </div>
-          <p className="SignXText">
+          <p className="haveAccount">
             Already have a user account? <Link to="/signin">Click here</Link> to
             sign in!
           </p>
@@ -65,4 +67,4 @@ const Courses = () => {
   return <SignUpForm></SignUpForm>;
 };
 
-export default Courses;
+export default SignUp;
