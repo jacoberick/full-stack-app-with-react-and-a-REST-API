@@ -1,4 +1,8 @@
 /* index styles */
+* {
+  box-sizing: border-box;
+}
+
 .header {
   background: #252627;
   padding: 20px 0;
@@ -9,6 +13,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 1250px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .headerContent a {
@@ -30,23 +37,38 @@ nav a {
 }
 
 .grid-33 {
-  width: 33.3%;
+  width: 33.33%;
+  padding: 0.5rem;
 }
 
 .courses {
   display: flex;
-  padding: 0 40px;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  max-width: 1250px;
+  width: 100%;
+  margin: 0 auto;
 }
+
 .courseModule {
   background: #598b7d;
   border-radius: 8px;
-  padding: 10px;
-  margin: 0 10px;
-  min-height: 107px;
+  padding: 1rem 2rem;
   display: block;
-  box-sizing: border-box;
   text-decoration: none;
   color: #f9f3ec;
+  height: 100%;
+}
+
+.addCourseModule {
+  background: rgb(195, 195, 195);
+}
+
+.addCourseModule h2 {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
 }
 
 .indexCourseLabel {

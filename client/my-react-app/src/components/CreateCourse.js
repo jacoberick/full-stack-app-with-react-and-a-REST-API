@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 // modules
 const axios = require("axios");
 
-const CourseDetail = props => {
+const CreateCourse = props => {
   const {
     match: { params }
   } = props;
@@ -40,20 +40,12 @@ const CourseDetail = props => {
     return (
       <div className="CDPage">
         <div className="actionBar">
-          <div className="ABContent">
-            <Link className="button" to={`/courses/id/update`}>
-              Update Course
-            </Link>
-            <button className="button">Delete Course</button>
-            <Link className="button buttonSecondary" to="/">
-              Return to List
-            </Link>
-          </div>
+          <div className="ABContent"></div>
         </div>
         <div className="courseDetails">
           <div className="courseHeader">
             <h4 className="detailCourseLabel">Course</h4>
-            <h1>{details.title}</h1>
+            <h1>Create a Course</h1>
             <p>
               By {user.firstName} {user.lastName}
             </p>
@@ -69,4 +61,4 @@ const CourseDetail = props => {
   return <CourseInfo></CourseInfo>;
 };
 
-export default CourseDetail;
+export default CreateCourse;

@@ -8,6 +8,7 @@ import Courses from "./components/Courses";
 import CourseDetail from "./components/CourseDetail";
 import SignUp from "./components/UserSignUp";
 import SignIn from "./components/UserSignIn";
+import CreateCourse from "./components/CreateCourse";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/courses/:id" component={CourseDetail} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/createCourse" component={CreateCourse} />
       </Switch>
     </Router>
   );

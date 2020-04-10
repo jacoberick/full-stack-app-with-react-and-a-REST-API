@@ -24,10 +24,23 @@ const Courses = () => {
     ));
   };
 
+  const AddCourse = () => {
+    return (
+      <div className="grid-33">
+        <a href="/createCourse" className="courseModule addCourseModule">
+          <h2>+Add Course</h2>
+        </a>
+      </div>
+    );
+  };
+
   return (
-    <ol className="courses">
-      <CourseList></CourseList>
-    </ol>
+    <div>
+      <div className="courses">
+        <CourseList></CourseList>
+        <AddCourse></AddCourse>
+      </div>
+    </div>
   );
 };
 
