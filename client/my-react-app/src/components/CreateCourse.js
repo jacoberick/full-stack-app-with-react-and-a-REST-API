@@ -1,64 +1,77 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-// modules
-const axios = require("axios");
+const CreateCourse = () => {
+  const [newCourse, setNewCourse] = useState({
+    title: "",
+    description: "",
+    hours: "",
+    materials: ""
+  });
 
-const CreateCourse = props => {
-  const {
-    match: { params }
-  } = props;
-  const apiGetCourseDetail = `http://localhost:5000/api/courses/${params.id}`;
-  const [details, setCourseDetails] = useState({});
-  const [user, setUser] = useState({});
+  const ValidationErrors = () => (
+    <div className="top--validation">
+      <h2 className="primary">Validation Errors</h2>
+      <ul></ul>
+    </div>
+  );
 
-  useEffect(() => {
-    axios.get(apiGetCourseDetail).then(res => {
-      const {
-        title,
-        description,
-        estimatedTime,
-        materialsNeeded,
-        User
-      } = res.data;
-      setCourseDetails({ title, description, estimatedTime, materialsNeeded });
-      setUser(User);
-    });
-  }, []);
-
-  const MaterialsNeeded = () => {
-    let materials = details.materialsNeeded
-      ? details.materialsNeeded.split("* ")
-      : [];
-
-    materials.length ? materials.shift() : materials.unshift("None");
-
-    return materials.map((m, idx) => <li key={idx}>{m}</li>);
-  };
-
-  const CourseInfo = () => {
-    return (
-      <div className="CDPage">
-        <div className="actionBar">
-          <div className="ABContent"></div>
+  return (
+    <div className="container md">
+      <div className="top">
+        <div className="top--heading">
+          <h1>Create Course</h1>
         </div>
-        <div className="courseDetails">
-          <div className="courseHeader">
-            <h4 className="detailCourseLabel">Course</h4>
-            <h1>Create a Course</h1>
-            <p>
-              By {user.firstName} {user.lastName}
-            </p>
-          </div>
-          <div className="courseDescription">
-            <p>{details.description}</p>
-          </div>
-        </div>
+        <ValidationErrors></ValidationErrors>
       </div>
-    );
-  };
-
-  return <CourseInfo></CourseInfo>;
+      <div className="bottom">
+        <form className="form" action="" id="createCourseForm">
+          <div className="form--left">
+            <label htmlFor="">Course</label>
+            <input
+              type="text"
+              placeholder="Course title..."
+              onChange={e =>
+                setNewCourse({ ...newCourse, title: e.target.value })
+              }
+            />
+            <p>By </p>
+            <textarea
+              name=""
+              id=""
+              cols="30"
+              rows="10"
+              placeholder="Course description..."
+              onChange={e =>
+                setNewCourse({ ...newCourse, description: e.target.value })
+              }
+            ></textarea>
+          </div>
+          <div className="form--right">
+            <label htmlFor="">Estimated Time</label>
+            <input
+              type="text"
+              placeholder="Hours"
+              onChange={e =>
+                setNewCourse({ ...newCourse, hours: e.target.value })
+              }
+            />
+            <label htmlFor="">Materials Needed</label>
+            <textarea
+              name=""
+              id=""
+              cols="30"
+              rows="10"
+              placeholder="List materials..."
+              onChange={e =>
+                setNewCourse({ ...newCourse, materials: e.target.value })
+              }
+            ></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default CreateCourse;

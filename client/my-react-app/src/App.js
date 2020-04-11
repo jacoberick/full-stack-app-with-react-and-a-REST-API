@@ -19,7 +19,7 @@ function App() {
         <Route exact path="/courses/:id" component={CourseDetail} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
-        <Route exact path="/createCourse" component={CreateCourse} />
+        <Route exact path="/create-course" component={CreateCourse} />
       </Switch>
     </Router>
   );

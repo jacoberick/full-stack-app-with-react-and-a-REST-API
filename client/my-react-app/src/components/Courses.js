@@ -27,7 +27,7 @@ const Courses = () => {
   const AddCourse = () => {
     return (
       <div className="grid-33">
-        <a href="/createCourse" className="courseModule addCourseModule">
+        <a href="/create-course" className="courseModule addCourseModule">
           <h2>+Add Course</h2>
         </a>
       </div>
