@@ -11,15 +11,24 @@ import SignIn from "./components/UserSignIn";
 import CreateCourse from "./components/CreateCourse";
 
 function App() {
+  const [auth, setAuth] = useState({
+    name: "",
+    username: ""
+  });
+
   return (
     <Router>
-      <Header />
+      <Header auth={auth} />
       <Switch>
         <Route exact path="/" component={Courses} />
+        <Route exact path="/courses/create" component={CreateCourse} />
         <Route exact path="/courses/:id" component={CourseDetail} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/signin" component={SignIn} />
-        <Route exact path="/create-course" component={CreateCourse} />
+        <Route exact path="/signin">
+          <SignIn setAuth={setAuth} />
+        </Route>
+        <Route exact path="/signup">
+          <SignUp setAuth={setAuth} />
+        </Route>
       </Switch>
     </Router>
   );

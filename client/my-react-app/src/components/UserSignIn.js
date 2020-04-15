@@ -1,48 +1,68 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-// modules
 const axios = require("axios");
 
-const SignIn = () => {
-  const apiGetCourses = "http://localhost:5000/api/courses";
-  const [courses, setCourses] = useState([]);
+const SignIn = ({ setAuth }) => {
+  const [newSignIn, setNewSignIn] = useState({
+    emailAddress: "",
+    password: "",
+    errors: []
+  });
 
-  useEffect(() => {
-    axios.get(apiGetCourses).then(res => {
-      setCourses(res.data);
-    });
-  }, []);
-
-  const SignUpForm = () => {
-    return (
-      <div className="form">
-        <div className="centered grid-33 signup">
-          <h1>Sign In</h1>
-          <div>
-            <label for="email"></label>
-            <input type="text" placeholder="Email" name="email" required />
-
-            <label for="psw"></label>
-            <input type="password" placeholder="Password" name="psw" required />
-
-            <button className="button" type="submit">
-              Sign In
-            </button>
-            <a href="/" className="button buttonSecondary">
-              Cancel
-            </a>
-          </div>
-          <p className="haveAccount">
-            Don't have a user account? <Link to="/signin">Click here</Link> to
-            sign up!
-          </p>
-        </div>
-      </div>
+  const signin = async (name, username) => {
+    let response = await axios.get(
+      "http://localhost:5000/api/users",
+      {},
+      { auth: { name, username } }
     );
   };
 
-  return <SignUpForm></SignUpForm>;
+  return (
+    <div className="page">
+      <div className="container sm">
+        <h1>Sign In</h1>
+        <form>
+          <input
+            type="text"
+            placeholder="Email"
+            name="email"
+            required
+            onChange={e =>
+              setNewSignIn({ ...newSignIn, emailAddress: e.target.value })
+            }
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            name="psw"
+            required
+            onChange={e =>
+              setNewSignIn({ ...newSignIn, password: e.target.value })
+            }
+          />
+          <div className="form--actions">
+            <button className="button" type="submit">
+              Sign In
+            </button>
+            <Link to="/">
+              <button
+                type="button"
+                name="cancel"
+                className="button buttonSecondary"
+              >
+                Cancel
+              </button>
+            </Link>
+          </div>
+        </form>
+        <p className="haveAccount">
+          Don't have a user account? <Link to="/signup">Click here</Link> to
+          sign up!
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default SignIn;

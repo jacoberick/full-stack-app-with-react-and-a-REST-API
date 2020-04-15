@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 // modules
 const axios = require("axios");
 
@@ -27,9 +27,9 @@ const Courses = () => {
   const AddCourse = () => {
     return (
       <div className="grid-33">
-        <a href="/create-course" className="courseModule addCourseModule">
+        <Link to="/courses/create" className="courseModule addCourseModule">
           <h2>+Add Course</h2>
-        </a>
+        </Link>
       </div>
     );
   };

@@ -1,70 +1,121 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import { Link } from "react-router-dom";
-
-// modules
+import { useHistory } from "react-router-dom";
 const axios = require("axios");
 
-const SignUp = () => {
-  const apiGetCourses = "http://localhost:5000/api/courses";
-  const [courses, setCourses] = useState([]);
+const SignUp = ({ setAuth }) => {
+  const [newUser, setNewUser] = useState({
+    firstName: "",
+    lastName: "",
+    emailAddress: "",
+    password: "",
+    confirmPassword: ""
+  });
 
-  useEffect(() => {
-    axios.get(apiGetCourses).then(res => {
-      setCourses(res.data);
-    });
-  }, []);
+  const history = useHistory();
 
-  const SignUpForm = () => {
-    return (
-      <div className="form">
-        <div className="centered grid-33 signup">
-          <h1>Sign Up</h1>
-          <div>
-            <label for="firstName"></label>
-            <input
-              type="text"
-              placeholder="First Name"
-              name="FirstName"
-              required
-            />
-            <label for="lastName"></label>
-            <input
-              type="text"
-              placeholder="Last Name"
-              name="lastName"
-              required
-            />
-            <label for="email"></label>
-            <input type="text" placeholder="Email" name="email" required />
+  const comparePasswords = () => {
+    const { password, confirmPassword } = newUser;
+    return password === confirmPassword ? true : false;
+  };
 
-            <label for="psw"></label>
-            <input type="password" placeholder="Password" name="psw" required />
+  const handleSubmit = async e => {
+    e.preventDefault();
 
-            <label for="psw-repeat"></label>
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              name="psw-repeat"
-              required
-            />
+    let passwordsMatch = comparePasswords();
 
+    let response;
+    if (passwordsMatch) {
+      response = await axios.post("http://localhost:5000/api/users", newUser);
+
+      if (response.status === 201) {
+        let name = `${newUser.firstName} ${newUser.lastName}`;
+        let username = newUser.emailAddress;
+        history.push("/");
+
+        setAuth({
+          name,
+          username
+        });
+      }
+    }
+  };
+
+  return (
+    <div className="page">
+      <div className="container sm">
+        <h1>Sign Up</h1>
+        <form className="form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="First Name"
+            name="FirstName"
+            required
+            onChange={e =>
+              setNewUser({ ...newUser, firstName: e.target.value })
+            }
+            value={newUser.firstName}
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            name="lastName"
+            required
+            onChange={e => setNewUser({ ...newUser, lastName: e.target.value })}
+            value={newUser.lastName}
+          />
+          <input
+            type="text"
+            placeholder="Email"
+            name="email"
+            required
+            onChange={e =>
+              setNewUser({ ...newUser, emailAddress: e.target.value })
+            }
+            value={newUser.emailAddress}
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            name="psw"
+            required
+            onChange={e => setNewUser({ ...newUser, password: e.target.value })}
+            value={newUser.password}
+          />
+
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            name="psw-repeat"
+            required
+            onChange={e =>
+              setNewUser({ ...newUser, confirmPassword: e.target.value })
+            }
+            value={newUser.confirmPassword}
+          />
+          <div className="form--actions">
             <button className="button" type="submit">
               Sign Up
             </button>
-            <a href="/" className="button buttonSecondary">
-              Cancel
+            <a href="/">
+              <button
+                type="button"
+                name="cancel"
+                className="button buttonSecondary"
+              >
+                Cancel
+              </button>
             </a>
           </div>
-          <p className="haveAccount">
-            Already have a user account? <Link to="/signin">Click here</Link> to
-            sign in!
-          </p>
-        </div>
+        </form>
+        <p className="haveAccount">
+          Already have a user account? <Link to="/signin">Click here</Link> to
+          sign in!
+        </p>
       </div>
-    );
-  };
-
-  return <SignUpForm></SignUpForm>;
+    </div>
+  );
 };
 
 export default SignUp;

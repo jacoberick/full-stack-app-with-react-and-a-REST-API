@@ -38,28 +38,36 @@ const CourseDetail = props => {
 
   const CourseInfo = () => {
     return (
-      <div className="CDPage">
+      <div>
         <div className="actionBar">
-          <div className="ABContent">
+          <div className="edit--form--actions">
             <Link className="button" to={`/courses/id/update`}>
               Update Course
             </Link>
             <button className="button">Delete Course</button>
-            <Link className="button buttonSecondary" to="/">
+            <Link className="button buttonSecondaryCourseEdit" to="/">
               Return to List
             </Link>
           </div>
         </div>
-        <div className="courseDetails">
-          <div className="courseHeader">
-            <h4 className="detailCourseLabel">Course</h4>
+        <div className="container md createCourseForm">
+          <div className="form--left">
+            <h3 style={{ margin: "0" }}>Course</h3>
             <h1>{details.title}</h1>
             <p>
               By {user.firstName} {user.lastName}
             </p>
+            <p className="courseDescription">{details.description}</p>
           </div>
-          <div className="courseDescription">
-            <p>{details.description}</p>
+          <div className="form--right">
+            <div className="estimatedTime">
+              <label>Estimated Time</label>
+              <p style={{ fontWeight: "bold" }}>{details.estimatedTime}</p>
+            </div>
+            <div className="materialsNeeded">
+              <label>Materials Needed</label>
+              <MaterialsNeeded />
+            </div>
           </div>
         </div>
       </div>
