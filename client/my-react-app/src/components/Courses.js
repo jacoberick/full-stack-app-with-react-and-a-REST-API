@@ -16,10 +16,10 @@ const Courses = () => {
   const CourseList = () => {
     return courses.map(c => (
       <div className="grid-33" key={c.id}>
-        <a href={`/courses/${c.id}`} className="courseModule">
-          <h4 className="indexCourseLabel">Course</h4>
-          <h3 className="courseTitle">{c.title}</h3>
-        </a>
+        <Link to={`/courses/${c.id}`} className="course--module">
+          <h4 className="index--course--label">Course</h4>
+          <h3 className="course--title">{c.title}</h3>
+        </Link>
       </div>
     ));
   };
@@ -27,7 +27,10 @@ const Courses = () => {
   const AddCourse = () => {
     return (
       <div className="grid-33">
-        <Link to="/courses/create" className="courseModule addCourseModule">
+        <Link
+          to="/courses/create"
+          className="course--module add--course--module"
+        >
           <h2>+Add Course</h2>
         </Link>
       </div>

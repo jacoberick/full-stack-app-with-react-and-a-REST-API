@@ -1,3 +1,8 @@
+/*
+*  camelCase = id
+*  hyphens & underscores = class
+*/
+
 /* index styles */
 * {
   box-sizing: border-box;
@@ -12,12 +17,16 @@ body {
   color: #598b7d;
 }
 
+.w-100 {
+  width: 100%;
+}
+
 .header {
   background: #252627;
   padding: 20px 0;
   margin-bottom: 30px;
 }
-.headerContent {
+.header--content {
   margin: 0 3rem 0 4rem;
   display: flex;
   align-items: center;
@@ -27,12 +36,12 @@ body {
   margin: 0 auto;
 }
 
-.headerContent a {
+.header--content a {
   text-decoration: none;
   color: #f9f3ec;
 }
 
-.headerLogo {
+.header--logo {
   display: inline-block;
   margin: 0;
   font-weight: bolder;
@@ -43,6 +52,10 @@ nav a {
   text-decoration: none;
   color: #f9f3ec;
   padding-right: 1rem;
+}
+
+#greeting {
+  color: #fff;
 }
 
 .grid-33 {
@@ -60,7 +73,7 @@ nav a {
   margin: 0 auto;
 }
 
-.courseModule {
+.course--module {
   background: #598b7d;
   border-radius: 8px;
   padding: 1rem 2rem;
@@ -70,27 +83,27 @@ nav a {
   height: 100%;
 }
 
-.addCourseModule {
+.add--course--module {
   background: rgb(195, 195, 195);
 }
 
-.addCourseModule h2 {
+.add--course--module h2 {
   display: flex;
   justify-content: center;
   padding-top: 1rem;
 }
 
-.indexCourseLabel {
+.index--course--label {
   color: #f9f3ec;
   opacity: 65%;
 }
 
-.courseTitle {
+.course--title {
   font-weight: bold;
 }
 
 /* course detail styles */
-.actionBar {
+.action--bar {
   background: #598b7d;
   padding: 20px 0;
   margin-top: -30px;
@@ -118,27 +131,16 @@ nav a {
   color: #252627;
   background-color: #fff;
   box-shadow: 0 0 0 2px #303233;
-  width: 100%;
-}
-
-.buttonSecondaryCourseEdit {
-  color: #252627;
-  background-color: #fff;
-  box-shadow: 0 0 0 2px #303233;
 }
 
 .detailCourseLabel {
   color: #7d7d7d;
 }
 
-.courseDescription {
+.course--description {
   font-size: 16px;
   line-height: 1.8;
   color: #444;
-}
-
-.estimatedTime {
-  margin-bottom: 5rem;
 }
 
 /* sign in and sign up styles */
@@ -153,7 +155,7 @@ input {
   font-size: 16px;
 }
 
-.haveAccount {
+.have--account {
   margin-top: 75px;
 }
 
@@ -170,9 +172,11 @@ input {
   margin: 0 auto;
 }
 
-.createCourseForm {
+#createCourseForm,
+#courseDetails {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .form--left {
@@ -233,4 +237,13 @@ input {
 .form--actions > * {
   display: block;
   width: calc(50% - 0.5rem);
+}
+
+#rightSideNav {
+  display: flex;
+}
+
+#signOut {
+  margin: 1rem 0 1rem 1rem;
+  color: rgb(140, 140, 140);
 }

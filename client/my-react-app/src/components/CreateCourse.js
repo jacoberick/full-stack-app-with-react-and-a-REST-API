@@ -1,15 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const CreateCourse = () => {
+const axios = require("axios");
+
+const CreateCourse = ({ auth }) => {
   const [newCourse, setNewCourse] = useState({
     title: "",
     description: "",
-    hours: "",
-    materials: ""
+    estimatedTime: "",
+    materialsNeeded: ""
   });
 
   // set up new state for errors
+  const [errors, setErrors] = useState({
+    errors: []
+  });
+
+  const createCourse = async e => {
+    e.preventDefault();
+
+    let response = axios.post("http://localhost:5000/api/courses", {
+      ...newCourse,
+      userId: auth.userId
+    });
+  };
 
   const ValidationErrors = () => (
     <div className="top--validation">
@@ -20,14 +34,11 @@ const CreateCourse = () => {
 
   return (
     <div>
-      <div className="actionBar">
-        <div className="edit--form--actions">
-          <button className="button">Submit Course</button>
-          <Link className="button buttonSecondaryCourseEdit" to="/">
-            Return to List
-          </Link>
-        </div>
-      </div>
+      <nav className="actionBar container md">
+        <Link className="button buttonSecondary" to="/">
+          Return to List
+        </Link>
+      </nav>
       <div className="container md">
         <div className="top">
           <div className="top--heading">
@@ -36,7 +47,11 @@ const CreateCourse = () => {
           <ValidationErrors></ValidationErrors>
         </div>
         <div className="bottom">
-          <form className="form" action="" className="createCourseForm">
+          <form
+            id="createCourseForm"
+            className="form"
+            onSubmit={e => createCourse(e)}
+          >
             <div className="form--left">
               <label htmlFor="">Course</label>
               <input
@@ -59,15 +74,23 @@ const CreateCourse = () => {
               ></textarea>
             </div>
             <div className="form--right">
-              <label htmlFor="">Estimated Time</label>
+              <label htmlFor="">Estimated Time (Hours)</label>
               <input
                 type="text"
                 placeholder="Hours"
                 onChange={e =>
-                  setNewCourse({ ...newCourse, hours: e.target.value })
+                  setNewCourse({ ...newCourse, estimatedTime: e.target.value })
                 }
               />
               <label htmlFor="">Materials Needed</label>
+              <div>
+                <p>Format as...</p>
+                <ul>
+                  <li>* item 1</li>
+                  <li>* item 2</li>
+                  <li>* item 3</li>
+                </ul>
+              </div>
               <textarea
                 name=""
                 id=""
@@ -75,9 +98,21 @@ const CreateCourse = () => {
                 rows="10"
                 placeholder="List materials..."
                 onChange={e =>
-                  setNewCourse({ ...newCourse, materials: e.target.value })
+                  setNewCourse({
+                    ...newCourse,
+                    materialsNeeded: e.target.value
+                  })
                 }
               ></textarea>
+            </div>
+            <div className="form--submit w-100">
+              <button
+                className="button w-100"
+                type="submit"
+                style={{ marginTop: "2rem" }}
+              >
+                Submit
+              </button>
             </div>
           </form>
         </div>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Component } from "react";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 const axios = require("axios");
 
 const SignUp = ({ setAuth }) => {
@@ -33,10 +32,12 @@ const SignUp = ({ setAuth }) => {
         let username = newUser.emailAddress;
         history.push("/");
 
-        setAuth({
-          name,
-          username
-        });
+        let auth = { ...response.data };
+        auth.isAuthenticated = true;
+        localStorage.setItem("_token", auth._token);
+
+        setAuth(auth);
+        history.push("/");
       }
     }
   };
@@ -102,14 +103,14 @@ const SignUp = ({ setAuth }) => {
               <button
                 type="button"
                 name="cancel"
-                className="button buttonSecondary"
+                className="button buttonSecondary w-100"
               >
                 Cancel
               </button>
             </a>
           </div>
         </form>
-        <p className="haveAccount">
+        <p className="have--account">
           Already have a user account? <Link to="/signin">Click here</Link> to
           sign in!
         </p>

@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
+import Cookie from "js-cookie";
 
 // pages
 import Header from "./components/Header";
@@ -11,24 +18,48 @@ import SignIn from "./components/UserSignIn";
 import CreateCourse from "./components/CreateCourse";
 
 function App() {
-  const [auth, setAuth] = useState({
-    name: "",
-    username: ""
-  });
+  const [auth, setAuth] = useState(Cookie.getJSON("auth") || null);
+
+  const PrivateRoute = ({ children, ...rest }) => {
+    return (
+      <Route
+        {...rest}
+        render={({ location }) =>
+          auth ? (
+            children
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/signin",
+                state: { from: location }
+              }}
+            />
+          )
+        }
+      />
+    );
+  };
 
   return (
     <Router>
       <Header auth={auth} />
       <Switch>
-        <Route exact path="/" component={Courses} />
-        <Route exact path="/courses/create" component={CreateCourse} />
-        <Route exact path="/courses/:id" component={CourseDetail} />
         <Route exact path="/signin">
           <SignIn setAuth={setAuth} />
         </Route>
         <Route exact path="/signup">
           <SignUp setAuth={setAuth} />
         </Route>
+
+        <PrivateRoute exact path="/">
+          <Courses auth={auth} />
+        </PrivateRoute>
+        <PrivateRoute exact path="/courses/create">
+          <CreateCourse auth={auth} />
+        </PrivateRoute>
+        <PrivateRoute exact path="/courses/:course_id">
+          <CourseDetail auth={auth} />
+        </PrivateRoute>
       </Switch>
     </Router>
   );

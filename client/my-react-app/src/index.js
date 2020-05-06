@@ -5,6 +5,10 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./styles/newOrder.css";
 
+const axios = require("axios");
+const jwtToken = localStorage.getItem("_token");
+axios.defaults.headers.common["Authorization"] = `Bearer ${jwtToken}`;
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

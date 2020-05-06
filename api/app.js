@@ -1,11 +1,13 @@
 "use strict";
 
 // load modules
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const sequelize = require("./models").sequelize;
 const routes = require("./routes");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 //testing db connection
 sequelize
@@ -29,6 +31,9 @@ app.use(cors());
 
 // setup request body JSON parsing
 app.use(express.json());
+
+// setup for cookies
+app.use(cookieParser());
 
 // setup morgan which gives us http request logging
 app.use(morgan("dev"));

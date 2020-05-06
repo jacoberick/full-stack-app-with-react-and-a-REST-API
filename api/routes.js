@@ -9,6 +9,7 @@ const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 
 const auth = require("basic-auth");
+const jwt = require("jsonwebtoken");
 
 /* Handler function to wrap each route. */
 function asyncHandler(cb) {
@@ -26,7 +27,12 @@ const authenticateUser = async (req, res, next) => {
   try {
     let message = null;
     // Parse the user's credentials from the Authorization header.
-    const credentials = auth(req);
+    let credentials = auth(req);
+    if (!credentials) {
+      const token = req.get("Authorization").split(" ")[1];
+      credentials = jwt.verify(token, process.env.JWT_SECRET);
+      console.log(credentials);
+    }
     // If the user's credentials are available...
     if (credentials) {
       // Attempt to retrieve the user from the data store
@@ -57,6 +63,12 @@ const authenticateUser = async (req, res, next) => {
           // so any middleware functions that follow this middleware function
           // will have access to the user's information.
           req.currentUser = user;
+
+          let jwtToken = jwt.sign(
+            { name: credentials.name, pass: credentials.pass },
+            process.env.JWT_SECRET
+          );
+          req.jwtToken = jwtToken;
         } else {
           message = `Authentication failure for email Address: ${user.emailAddress}`;
         }
@@ -128,7 +140,9 @@ router.get("/users", authenticateUser, (req, res) => {
   const user = req.currentUser;
   res.json({
     name: `${user.firstName} ${user.lastName}`,
-    username: user.emailAddress
+    username: user.emailAddress,
+    userId: user.id,
+    _token: req.jwtToken
   });
   res
     .location("/")
