@@ -228,6 +228,7 @@ input {
 
 .edit--form--actions {
   margin-left: 4.5rem;
+  display: flex;
 }
 
 .edit--form--actions > * {
@@ -246,4 +247,8 @@ input {
 #signOut {
   margin: 1rem 0 1rem 1rem;
   color: rgb(140, 140, 140);
+}
+
+#formatAs ul {
+  list-style-type: none;
 }

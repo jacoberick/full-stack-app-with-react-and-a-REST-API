@@ -1,5 +1,6 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import Cookies from "js-cookie";
 const axios = require("axios");
 
 const SignUp = ({ setAuth }) => {
@@ -26,16 +27,16 @@ const SignUp = ({ setAuth }) => {
     let response;
     if (passwordsMatch) {
       response = await axios.post("http://localhost:5000/api/users", newUser);
+      console.log(response);
 
       if (response.status === 201) {
-        let name = `${newUser.firstName} ${newUser.lastName}`;
-        let username = newUser.emailAddress;
         history.push("/");
 
         let auth = { ...response.data };
+        console.log(auth);
         auth.isAuthenticated = true;
+        Cookies.set("auth", JSON.stringify(auth));
         localStorage.setItem("_token", auth._token);
-
         setAuth(auth);
         history.push("/");
       }

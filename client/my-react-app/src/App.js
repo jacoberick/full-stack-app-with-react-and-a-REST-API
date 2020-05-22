@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 import {
@@ -16,6 +16,7 @@ import CourseDetail from "./components/CourseDetail";
 import SignUp from "./components/UserSignUp";
 import SignIn from "./components/UserSignIn";
 import CreateCourse from "./components/CreateCourse";
+import UpdateCourse from "./components/UpdateCourse";
 
 function App() {
   const [auth, setAuth] = useState(Cookie.getJSON("auth") || null);
@@ -42,7 +43,7 @@ function App() {
 
   return (
     <Router>
-      <Header auth={auth} />
+      <Header auth={auth} setAuth={setAuth} />
       <Switch>
         <Route exact path="/signin">
           <SignIn setAuth={setAuth} />
@@ -50,15 +51,17 @@ function App() {
         <Route exact path="/signup">
           <SignUp setAuth={setAuth} />
         </Route>
-
-        <PrivateRoute exact path="/">
+        <Route exact path="/">
           <Courses auth={auth} />
-        </PrivateRoute>
+        </Route>
         <PrivateRoute exact path="/courses/create">
           <CreateCourse auth={auth} />
         </PrivateRoute>
-        <PrivateRoute exact path="/courses/:course_id">
+        <Route exact path="/courses/:course_id">
           <CourseDetail auth={auth} />
+        </Route>
+        <PrivateRoute exact path="/courses/:course_id/update">
+          <UpdateCourse auth={auth} />
         </PrivateRoute>
       </Switch>
     </Router>

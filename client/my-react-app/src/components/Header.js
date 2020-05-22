@@ -1,20 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Cookie from "js-cookie";
+import UserSignOut from "./UserSignOut";
 
-const Header = ({ auth }) => {
-  const signOut = () => {
-    Cookie.remove("auth");
-  };
-
+const Header = ({ auth, setAuth }) => {
   const Greeting = () => {
     if (auth) {
       return (
         <div id="rightSideNav">
           <p id="greeting">Hi {auth.name}!</p>
-          <Link id="signOut" to="/signin" onClick={signOut}>
-            Sign Out
-          </Link>
+          <UserSignOut setAuth={setAuth} />
         </div>
       );
     }

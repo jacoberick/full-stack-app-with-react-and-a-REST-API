@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // modules
 const axios = require("axios");
 
-const Courses = () => {
+const Courses = ({ auth }) => {
   const apiGetCourses = "http://localhost:5000/api/courses";
   const [courses, setCourses] = useState([]);
 
@@ -25,16 +25,22 @@ const Courses = () => {
   };
 
   const AddCourse = () => {
-    return (
-      <div className="grid-33">
-        <Link
-          to="/courses/create"
-          className="course--module add--course--module"
-        >
-          <h2>+Add Course</h2>
-        </Link>
-      </div>
-    );
+    // if user is logged in, then show add course button in the template
+    // requirements: unauthenticated users don't see button, authenticated users do
+    if (auth) {
+      return (
+        <div className="grid-33">
+          <Link
+            to="/courses/create"
+            className="course--module add--course--module"
+          >
+            <h2>+Add Course</h2>
+          </Link>
+        </div>
+      );
+    }
+
+    return null;
   };
 
   return (

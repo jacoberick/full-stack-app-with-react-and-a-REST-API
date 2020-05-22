@@ -30,8 +30,11 @@ const authenticateUser = async (req, res, next) => {
     let credentials = auth(req);
     if (!credentials) {
       const token = req.get("Authorization").split(" ")[1];
-      credentials = jwt.verify(token, process.env.JWT_SECRET);
-      console.log(credentials);
+      const validate = jwt.verify(token, process.env.JWT_SECRET);
+      if (validate) {
+        next();
+        return;
+      }
     }
     // If the user's credentials are available...
     if (credentials) {
@@ -94,7 +97,6 @@ const authenticateUser = async (req, res, next) => {
 //validation for input fields
 const formValidation = (req, res) => {
   const errors = validationResult(req);
-  console.log(errors);
 
   // If there are validation errors...
   if (!errors.isEmpty()) {
@@ -102,8 +104,10 @@ const formValidation = (req, res) => {
     const errorMessages = errors.array().map(error => error.msg);
 
     // Return validation errors response
-    return res.status(400).json({ errors: errorMessages });
+    return errorMessages;
   }
+
+  return true;
 };
 
 /*
@@ -220,7 +224,11 @@ router.post(
   "/courses",
   [descValidator, titleValidator, authenticateUser],
   asyncHandler(async (req, res) => {
-    formValidation(req, res);
+    const validation = formValidation(req, res);
+
+    if (Array.isArray(validation)) {
+      return res.status(400).json({ errors: validation });
+    }
 
     let course;
     try {
@@ -230,7 +238,7 @@ router.post(
         .status(201)
         .end();
     } catch (e) {
-      course = await Course.build(req.body);
+      return e;
     }
   })
 );
@@ -241,7 +249,11 @@ router.put(
   "/courses/:id",
   [descValidator, titleValidator, authenticateUser],
   asyncHandler(async (req, res) => {
-    formValidation(req, res);
+    const validation = formValidation(req, res);
+
+    if (Array.isArray(validation)) {
+      return res.status(400).json({ errors: validation });
+    }
 
     let course;
     try {
@@ -249,7 +261,7 @@ router.put(
       await course.update(req.body);
       res.status(204).end();
     } catch (e) {
-      course = await Course.build(req.body);
+      return e;
     }
   })
 );

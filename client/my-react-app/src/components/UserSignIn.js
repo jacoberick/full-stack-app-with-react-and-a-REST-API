@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 const axios = require("axios");
@@ -29,6 +29,7 @@ const SignIn = ({ setAuth }) => {
       localStorage.setItem("_token", auth._token);
 
       setAuth(auth);
+      console.log(auth);
       history.push("/");
     } catch (e) {
       setNewSignIn({ ...newSignIn, error: e });

@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 
 // modules
 const axios = require("axios");
 
-const CourseDetail = props => {
+const CourseDetail = ({ auth }) => {
   const { course_id } = useParams();
-  const apiGetCourseDetail = `http://localhost:5000/api/courses/${course_id}`;
+  const apiCourse = `http://localhost:5000/api/courses/${course_id}`;
   const [details, setCourseDetails] = useState({});
   const [user, setUser] = useState({});
+  const history = useHistory();
 
   useEffect(() => {
-    axios.get(apiGetCourseDetail).then(res => {
+    axios.get(apiCourse).then(res => {
       const {
         title,
         description,
@@ -22,14 +23,12 @@ const CourseDetail = props => {
       setCourseDetails({ title, description, estimatedTime, materialsNeeded });
       setUser(User);
     });
-  }, []);
+  }, [apiCourse]);
 
   const MaterialsNeeded = () => {
     let materials = details.materialsNeeded
-      ? details.materialsNeeded.split("* ")
-      : [];
-
-    materials.length ? materials.shift() : materials.unshift("None");
+      ? details.materialsNeeded.split("\n")
+      : ["None"];
 
     return materials.map((m, idx) => <li key={idx}>{m}</li>);
   };
@@ -40,15 +39,45 @@ const CourseDetail = props => {
     return <p style={{ fontWeight: "bold" }}>{eta}</p>;
   };
 
+  const CourseEdit = () => {
+    if (auth && user.id === auth.userId) {
+      return (
+        <div className="edit--form--actions">
+          <Link className="button" to={`/courses/${course_id}/update`}>
+            Update Course
+          </Link>
+          <button className="button" onClick={deleteCourse}>
+            Delete Course
+          </button>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const deleteCourse = () => {
+    //obtain selected course CourseList
+    //delete it, and then push to /
+    let confirm = window.confirm(
+      "Are you sure you'd like to delete this course?"
+    );
+    if (confirm) {
+      axios.delete(apiCourse).then(res => {
+        if (res.status === 204) {
+          history.push("/");
+        } else {
+          alert("Something went wrong.");
+        }
+      });
+    }
+  };
+
   const CourseInfo = () => {
     return (
       <div>
         <div className="action--bar">
           <div className="edit--form--actions">
-            <Link className="button" to={`/courses/id/update`}>
-              Update Course
-            </Link>
-            <button className="button">Delete Course</button>
+            <CourseEdit />
             <Link className="button" to="/">
               Return to List
             </Link>
