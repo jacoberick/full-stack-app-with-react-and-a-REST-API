@@ -8,7 +8,6 @@ Then, navigate to client/my-react-app and run
 
 ```
 npm install
-
 ```
 
 And then, 
