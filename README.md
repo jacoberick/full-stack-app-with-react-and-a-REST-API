@@ -3,15 +3,17 @@ Treehouse Project 10
 
 ## Getting Started
 
-First, install the project's dependencies using `npm` in the api and client/my-react-app directories.
+First, navigate into 'api' and follow readme instructions.
+Then, navigate to client/my-react-app and run
 
 ```
 npm install
 
 ```
 
-And lastly, run this command in the client/my-react-app and api directories
+And then, 
 
 ```
 npm start
 ```
+Enjoy. 
