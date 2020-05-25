@@ -9,18 +9,22 @@ import {
 } from "react-router-dom";
 import Cookie from "js-cookie";
 
-// pages
+// page imports
 import Header from "./components/Header";
 import Courses from "./components/Courses";
 import CourseDetail from "./components/CourseDetail";
 import SignUp from "./components/UserSignUp";
 import SignIn from "./components/UserSignIn";
+import SignOut from "./components/UserSignOut";
 import CreateCourse from "./components/CreateCourse";
 import UpdateCourse from "./components/UpdateCourse";
 
+// sets global authorization state
 function App() {
   const [auth, setAuth] = useState(Cookie.getJSON("auth") || null);
 
+  //show component if logged in
+  //if not, redirect to signin page
   const PrivateRoute = ({ children, ...rest }) => {
     return (
       <Route
@@ -50,6 +54,9 @@ function App() {
         </Route>
         <Route exact path="/signup">
           <SignUp setAuth={setAuth} />
+        </Route>
+        <Route exact path="/signout">
+          <SignOut setAuth={setAuth} />
         </Route>
         <Route exact path="/">
           <Courses auth={auth} />

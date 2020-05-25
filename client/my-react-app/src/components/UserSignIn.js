@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 const axios = require("axios");
 
 const SignIn = ({ setAuth }) => {
+  // set state for sign in info
   const [newSignIn, setNewSignIn] = useState({
     emailAddress: "",
     password: "",
@@ -12,11 +13,14 @@ const SignIn = ({ setAuth }) => {
 
   const history = useHistory();
 
+  // sign in component
   const signIn = async e => {
     e.preventDefault();
     const username = newSignIn.emailAddress;
     const password = newSignIn.password;
 
+    // attemps a GET request with user credentials
+    // if found sets cookie and localStorage JWT token
     try {
       let response = await axios.get("http://localhost:5000/api/users", {
         auth: { username, password }
@@ -32,6 +36,7 @@ const SignIn = ({ setAuth }) => {
       console.log(auth);
       history.push("/");
     } catch (e) {
+      // if user is not found set error from API
       setNewSignIn({ ...newSignIn, error: e });
     }
   };

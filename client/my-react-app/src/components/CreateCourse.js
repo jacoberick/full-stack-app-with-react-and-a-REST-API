@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Form from "./Form";
 
 const CreateCourse = ({ auth }) => {
+  // set state for input fields
   const [course, setCourse] = useState({
     title: "",
     description: "",

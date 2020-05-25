@@ -7,11 +7,16 @@ const axios = require("axios");
 const CourseDetail = ({ auth }) => {
   const { course_id } = useParams();
   const apiCourse = `http://localhost:5000/api/courses/${course_id}`;
+
+  // setting state
   const [details, setCourseDetails] = useState({});
   const [user, setUser] = useState({});
+
   const history = useHistory();
 
+  // on component mount
   useEffect(() => {
+    //axios GET request to get selected course information
     axios.get(apiCourse).then(res => {
       const {
         title,
@@ -25,6 +30,7 @@ const CourseDetail = ({ auth }) => {
     });
   }, [apiCourse]);
 
+  // formats materials from the GET request
   const MaterialsNeeded = () => {
     let materials = details.materialsNeeded
       ? details.materialsNeeded.split("\n")
@@ -33,13 +39,17 @@ const CourseDetail = ({ auth }) => {
     return materials.map((m, idx) => <li key={idx}>{m}</li>);
   };
 
+  // formats estimated time from the GET request
   const EstimatedTime = () => {
     let time = details.estimatedTime;
     let eta = time ? time : "No Estimated Time Available";
     return <p style={{ fontWeight: "bold" }}>{eta}</p>;
   };
 
+  // course edit button
   const CourseEdit = () => {
+    // if auth and user id matches course id,
+    // return the course actions
     if (auth && user.id === auth.userId) {
       return (
         <div className="edit--form--actions">
@@ -55,6 +65,7 @@ const CourseDetail = ({ auth }) => {
     return null;
   };
 
+  // delete course button
   const deleteCourse = () => {
     //obtain selected course CourseList
     //delete it, and then push to /
@@ -72,6 +83,7 @@ const CourseDetail = ({ auth }) => {
     }
   };
 
+  // return course info
   const CourseInfo = () => {
     return (
       <div>

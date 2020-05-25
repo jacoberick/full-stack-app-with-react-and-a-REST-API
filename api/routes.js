@@ -68,7 +68,7 @@ const authenticateUser = async (req, res, next) => {
           req.currentUser = user;
 
           let jwtToken = jwt.sign(
-            { name: credentials.name, pass: credentials.pass },
+            { id: user.id, email: user.emailAddress },
             process.env.JWT_SECRET
           );
           req.jwtToken = jwtToken;
@@ -142,15 +142,16 @@ const descValidator = check("description")
 // @ status 200
 router.get("/users", authenticateUser, (req, res) => {
   const user = req.currentUser;
-  res.json({
-    name: `${user.firstName} ${user.lastName}`,
-    username: user.emailAddress,
-    userId: user.id,
-    _token: req.jwtToken
-  });
+
   res
     .location("/")
     .status(200)
+    .json({
+      name: `${user.firstName} ${user.lastName}`,
+      username: user.emailAddress,
+      userId: user.id,
+      _token: req.jwtToken
+    })
     .end();
 });
 
@@ -160,20 +161,34 @@ router.post(
   "/users",
   [firstNameValidator, lastNameValidator, emailValidator, passValidator],
   asyncHandler(async (req, res) => {
-    formValidation(req, res);
+    const validation = formValidation(req, res);
+
+    if (Array.isArray(validation)) {
+      return res.status(400).json({ errors: validation });
+    }
 
     let user = req.body;
     // Hash user password prior to create
     user.password = bcrypt.hashSync(user.password);
 
     try {
-      user = await User.create(req.body);
+      user = await User.create(user);
+      let jwtToken = jwt.sign(
+        { id: user.id, email: user.emailAddress },
+        process.env.JWT_SECRET
+      );
       res
         .location("/")
         .status(201)
+        .json({
+          name: `${user.firstName} ${user.lastName}`,
+          username: user.emailAddress,
+          userId: user.id,
+          _token: jwtToken
+        })
         .end();
     } catch (e) {
-      user = await User.build(req.body);
+      return e;
     }
   })
 );

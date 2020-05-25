@@ -1,19 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Cookie from "js-cookie";
 
+// sign out
 const UserSignOut = ({ setAuth }) => {
-  const signOut = () => {
+  const history = useHistory();
+  useEffect(() => {
+    // removes JWT token and Auth Cookie
+    // sets Auth to null
     localStorage.removeItem("_token");
     Cookie.remove("auth");
     setAuth(null);
-  };
-
-  return (
-    <Link id="signOut" to="/signin" onClick={signOut}>
-      Sign Out
-    </Link>
-  );
+    history.push("/");
+  });
+  return null;
 };
 
 export default UserSignOut;

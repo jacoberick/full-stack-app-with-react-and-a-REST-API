@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const axios = require("axios");
 
@@ -12,6 +12,7 @@ const Form = ({ auth, action, course, setCourse, courseId }) => {
   const createCourse = async e => {
     e.preventDefault();
 
+    // axios POST request
     axios
       .post("http://localhost:5000/api/courses", {
         ...course,
@@ -30,6 +31,7 @@ const Form = ({ auth, action, course, setCourse, courseId }) => {
   const updateCourse = async e => {
     e.preventDefault();
 
+    // axios POST request
     axios
       .put(`http://localhost:5000/api/courses/${courseId}`, {
         ...course,

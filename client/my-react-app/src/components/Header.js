@@ -1,14 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import UserSignOut from "./UserSignOut";
 
 const Header = ({ auth, setAuth }) => {
   const Greeting = () => {
+    // if authorized show greeting
     if (auth) {
       return (
         <div id="rightSideNav">
           <p id="greeting">Hi {auth.name}!</p>
-          <UserSignOut setAuth={setAuth} />
+          <Link id="signOut" to="/signout">
+            Sign Out
+          </Link>
         </div>
       );
     }

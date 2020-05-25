@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Form from "./Form";
 
 const axios = require("axios");
 
 const UpdateCourse = ({ auth }) => {
+  // set state for update course
   const [course, setCourse] = useState({
     title: "",
     description: "",
@@ -15,15 +16,11 @@ const UpdateCourse = ({ auth }) => {
   const { course_id } = useParams();
   const apiCourse = `http://localhost:5000/api/courses/${course_id}`;
 
+  // on component mount
   useEffect(() => {
+    // axios GET request for course
     axios.get(apiCourse).then(res => {
-      const {
-        title,
-        description,
-        estimatedTime,
-        materialsNeeded,
-        User
-      } = res.data;
+      const { title, description, estimatedTime, materialsNeeded } = res.data;
       setCourse({ title, description, estimatedTime, materialsNeeded });
     });
   }, [apiCourse]);
@@ -31,8 +28,8 @@ const UpdateCourse = ({ auth }) => {
   return (
     <div>
       <nav className="actionBar container md">
-        <Link className="button buttonSecondary" to="/">
-          Return to List
+        <Link className="button buttonSecondary" to={`/courses/${course_id}`}>
+          Return to Course
         </Link>
       </nav>
       <div className="container md">

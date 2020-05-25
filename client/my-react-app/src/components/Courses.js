@@ -5,15 +5,19 @@ const axios = require("axios");
 
 const Courses = ({ auth }) => {
   const apiGetCourses = "http://localhost:5000/api/courses";
+  // set state for courses
   const [courses, setCourses] = useState([]);
 
+  // on component mount
   useEffect(() => {
+    // GET request for course list
     axios.get(apiGetCourses).then(res => {
       setCourses(res.data);
     });
   }, []);
 
   const CourseList = () => {
+    // maps out returned list from GET request
     return courses.map(c => (
       <div className="grid-33" key={c.id}>
         <Link to={`/courses/${c.id}`} className="course--module">

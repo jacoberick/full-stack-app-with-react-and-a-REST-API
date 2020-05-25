@@ -245,8 +245,12 @@ input {
 }
 
 #signOut {
+  border: none;
+  background-color: transparent;
   margin: 1rem 0 1rem 1rem;
   color: rgb(140, 140, 140);
+  padding: 0;
+  font-size: 1rem;
 }
 
 #formatAs ul {
