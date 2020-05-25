@@ -3,9 +3,7 @@ Treehouse Project 10
 
 ## Getting Started
 
-To get up and running with this project, run the following commands from the root of the folder that contains this README file.
-
-First, install the project's dependencies using `npm`.
+First, install the project's dependencies using `npm` in the api and client/my-react-app directories.
 
 ```
 npm install
