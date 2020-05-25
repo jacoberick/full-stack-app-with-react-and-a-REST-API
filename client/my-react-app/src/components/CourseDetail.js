@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
+const ReactMarkdown = require("react-markdown");
 
 // modules
 const axios = require("axios");
@@ -36,14 +37,22 @@ const CourseDetail = ({ auth }) => {
       ? details.materialsNeeded.split("\n")
       : ["None"];
 
-    return materials.map((m, idx) => <li key={idx}>{m}</li>);
+    return materials.map((m, idx) => (
+      <ul className="materials--needed" key={idx}>
+        <ReactMarkdown source={m} />
+      </ul>
+    ));
   };
 
   // formats estimated time from the GET request
   const EstimatedTime = () => {
     let time = details.estimatedTime;
     let eta = time ? time : "No Estimated Time Available";
-    return <p style={{ fontWeight: "bold" }}>{eta}</p>;
+    return (
+      <div style={{ fontWeight: "bold" }}>
+        <ReactMarkdown source={eta} />
+      </div>
+    );
   };
 
   // course edit button

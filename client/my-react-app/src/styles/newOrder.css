@@ -256,3 +256,7 @@ input {
 #formatAs ul {
   list-style-type: none;
 }
+
+.materials--needed {
+  padding-left: 0;
+}
