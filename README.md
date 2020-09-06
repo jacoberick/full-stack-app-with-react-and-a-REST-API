@@ -1,5 +1,5 @@
 # Full-Stack-App-with-React-and-a-REST-API
-Treehouse Project 10
+A React app that interacts with a RESTful API I created, that uses CRUD operations, hashes passwords, has validations, and sends back and forth status/error codes.
 
 ## Getting Started
 
